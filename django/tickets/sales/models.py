@@ -10,7 +10,8 @@ class Products(models.Model):
     price=models.PositiveIntegerField(verbose_name='Цена')
     quantity=models.IntegerField(verbose_name='Количество свободных мест',default=8)
     
-    date=models.DateTimeField(verbose_name='Дата и время поездки')
+    date=models.DateField(verbose_name='Дата поездки')
+    time=models.TimeField(verbose_name='Время поездки')
     class Meta:                              #класс мета это создание доп настроек, с помощью этой мы сделали отображение в админке не POSTSS, а продукты, а также продукт в единственном числе
         verbose_name='Рейс'
         verbose_name_plural='Рейсы'
