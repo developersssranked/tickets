@@ -140,7 +140,3 @@ function hideOverflowElements() {
 }
 hideOverflowElements();
 window.addEventListener("resize", hideOverflowElements);
-window.addEventListener("resize", () => {
-  const hideFormBtn = document.getElementById("hideForm")
-  hideFormBtn.style.height = document.documentElement.scrollHeight
-});
