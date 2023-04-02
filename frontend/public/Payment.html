@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Продажа Билетов</title>
+    <link rel="stylesheet" href="../src/Payment.css" />
+  </head>
+  <body>
+    <main>
+      <div class="ordered">
+        <h1>Выбраный билет</h1>
+        <div class="ticket">
+          <div class="location-price">
+            <div class="location">
+              <p> Международный аэропорт Стамбул </з>
+              <p>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="20px"
+                  width="20px"
+                  viewBox="0 0 320 512"
+                >
+                  <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                  <path
+                    d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+                  />
+                </svg>
+              </p>
+              <p> Святой Влас </p>
+            </div>
+          </div>
+          <!-- departure time -->
+          <div class="departure">
+            <h5>Время Отправления</h5>
+            <p class="departure-time">09:00, Вт</p>
+            <p class="departure-date">2023.12.05</p>
+          </div>
+        </div>
+      </div>
+      <div class="checkout-form">
+        <h1>Общая стоимость</h1>
+        <div class="total">
+            <p>
+                Количество билетов: 5
+            </p>
+            <p>
+                Цена за билет 70$
+            </p>
+            <h3>Всего к оплате: 350$</h3>
+            <form class="payment-method">
+                <h3>Выберите метод оплаты</h3>
+                <div>
+                    <label>
+                        <input type="radio" name="paymentMethod" required>
+                        <img src="../src/images/revolut.jpg" alt="revolut">
+                    </label>
+                    <label>
+                        <input type="radio" name="paymentMethod" required>
+                        <img src="../src/images/qiwi.jpg" alt="qivi">
+                    </label>
+                </div>
+                <button type="submit" class="payment-submit">Подтвердить</button>
+            </form>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
