@@ -401,3 +401,9 @@ body {
     border-radius: 0;
   }
 }
+
+@media (max-width: 390px) {
+  .user-name h3 {
+    width: 93%;
+  }
+}
