@@ -9,7 +9,7 @@ class ProductAdmin(admin.ModelAdmin):
             #Делаем сортировку по именам в алфавитном порядке
 @admin.register(Reserve)
 class ReserveAdmin(admin.ModelAdmin):
-    list_display=('name','surname','email','date_create','is_paid')
+    list_display=('name','surname','email','pets','bagage','handbag','phone_number','date_create','is_paid')
     fields=('name','surname','email','date_create','is_paid')
-    search_fields=('email',)
+    search_fields=('email','phone_number','name','surname')
     readonly_fields=('date_create',)
