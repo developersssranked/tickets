@@ -20,14 +20,14 @@ class ReserveForm(ModelForm):
                 'type':"email", 'placeholder':"Почта", 'required name':"Mail"
             }),
             'bagage':CheckboxInput(attrs={                               #докопаться до жени, чтобы сделал нормально
-            "type":"checkbox", 'required name':"luggage"
+            "type":"checkbox", ' name':"luggage"
             }),
             "handbag":CheckboxInput(attrs={
             'type':"checkbox", 
-            'required name':"handLuggage"
+            ' name':"handLuggage"
             }),
-            'pets':RadioSelect(attrs={
-            'type':"radio", 'required_name':"pets"
+            'pets':CheckboxInput(attrs={
+            'type':"checkbox",'name':'luggage'
             }),
             'reserve_quantity':NumberInput(attrs={
             'type':"number", 'min':"1", 'max':"8", 'placeholder':"Количество мест", 'name':"seats"

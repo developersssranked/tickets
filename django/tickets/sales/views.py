@@ -14,9 +14,5 @@ class OrderView(CreateView):
     form_class=ReserveForm
     template_name='sales/OrderForm.html'
     success_url=reverse_lazy('sales:index')                 #Перекинуть на страницу оплаты
-    def get(self, request, *args, **kwargs):
-        product_id=kwargs.get('product_id')
-        
-        initial = {'booking':Products.objects.get(pk=product_id)}
-        return initial
+   
         

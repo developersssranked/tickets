@@ -137,7 +137,7 @@
       <section class="tickets-sec">
         <div class="tickets-container">
           {%for el in object_list%}
-            <a class="ticket" href="{%url 'sales:order' el.id%}">
+            <a class="ticket" href="{%url 'sales:order' %}">
               
               <!-- ticket number -->
               <div>
