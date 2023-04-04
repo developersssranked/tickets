@@ -22,12 +22,19 @@ class IndexView(ListView):
 def Order(request,product_id):
     product=Products.objects.get(id=product_id)
     place=product.quantity
+    
     if request.method=='POST':
         form=ReserveForm(data=request.POST)
+        
         if form.is_valid():
             
+            quan=form.cleaned_data.get("reserve_quantity")
+            product.quantity-=quan
+            product.save()
             form.instance.booking=product
+            
             form.save()
+            
             return HttpResponseRedirect(reverse('sales:index'))
     else:
         form=ReserveForm()
