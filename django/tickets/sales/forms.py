@@ -2,6 +2,7 @@ from django.forms import ModelForm,TextInput, DateTimeInput, Textarea,CheckboxIn
 from sales.models import Reserve
 
 class ReserveForm(ModelForm):
+    
     class Meta:
         model=Reserve
         fields=['name','surname','phone_number','bagage','handbag','email','pets','reserve_quantity']
@@ -19,7 +20,7 @@ class ReserveForm(ModelForm):
             'email': TextInput(attrs={
                 'type':"email", 'placeholder':"Почта", 'required name':"Mail"
             }),
-            'bagage':CheckboxInput(attrs={                               #докопаться до жени, чтобы сделал нормально
+            'bagage':CheckboxInput(attrs={                               
             "type":"checkbox", ' name':"luggage"
             }),
             "handbag":CheckboxInput(attrs={

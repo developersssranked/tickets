@@ -30,7 +30,7 @@ class Products(models.Model):
     weekday = models.CharField(verbose_name='День недели', null=True, max_length=10)
     
     def __str__(self):
-        return f'{self.start_punkt+self.finish_punkt}'
+        return f'Рейс {self.start_punkt}-{self.finish_punkt} Дата:{self.date} Время:{self.time} '
 @receiver(pre_save, sender=Products)
 def calculate_weekday(sender, instance, **kwargs):
     instance.aboba=['Пн',"Вт","Ср","Чт","Пт","Сб","Вс"]
