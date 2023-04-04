@@ -135,14 +135,15 @@
         </div>
       </section>
       <section class="tickets-sec">
-        <div class="tickets-container">
-          {%for el in object_list%}
-            <a class="ticket" href="{%url 'sales:order' %}">
+        {%for el in object_list%}
+          <div class="tickets-container">
+            
+            <a class="ticket" href="{%url 'sales:order' el.id %}">
               
               <!-- ticket number -->
               <div>
                 <p>
-                  1
+                  
                 </p>
               </div>
               <!-- location from & to -->
@@ -181,8 +182,9 @@
                 <p class="departure-date">{{el.date}}</p>
               </div>
             </a>
-          {%endfor%}
-        </div>
+          
+          </div>
+        {%endfor%}
       </section>
       <section class="contacts-sec">
         <div class="contacts-wrapper">
