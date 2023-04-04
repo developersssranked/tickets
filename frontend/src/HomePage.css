@@ -310,6 +310,29 @@ select option {
   font-size: 17.9665px;
   line-height: 31px;
 }
+
+.cancel-order-btn {
+  padding: 10px 20px;
+  background-color: rgb(240, 8, 8);
+  color: white;
+  font-family: "OpenSans";
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+}
+
+.cancel-order-btn-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.cancel-order-btn:hover {
+  box-shadow: 0px 2.7px 4px rgba(0, 0, 0, 0.5);
+}
+
 .departure h5 {
   margin: 0;
   color: white;
