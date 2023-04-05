@@ -1,7 +1,9 @@
 from django.db import models
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save,post_save,pre_delete
 from django.dispatch import receiver
-import datetime
+
+from datetime import timedelta
+from django.utils import timezone
 # Create your models here.
 
     
@@ -35,6 +37,7 @@ class Products(models.Model):
 def calculate_weekday(sender, instance, **kwargs):
     instance.aboba=['Пн',"Вт","Ср","Чт","Пт","Сб","Вс"]
     instance.weekday = instance.aboba[instance.date.weekday()]
+    
 class Reserve(models.Model):
     name=models.CharField(verbose_name='Имя',max_length=30)
     surname=models.CharField(verbose_name='Фамилия',max_length=50)
@@ -50,9 +53,23 @@ class Reserve(models.Model):
     bagage=models.BooleanField(verbose_name='Багаж',default=False)
     handbag=models.BooleanField(verbose_name='Ручная кладь',default=False)
     reserve_quantity=models.PositiveIntegerField(verbose_name='Количество забронированных мест')
+    deleted_at=models.DateTimeField(verbose_name='Удалить',null=True,blank=True)
     
     class Meta:                              #класс мета это создание доп настроек, с помощью этой мы сделали отображение в админке не POSTSS, а продукты, а также продукт в единственном числе
         verbose_name='Бронь'
         verbose_name_plural='Брони'
     def __str__(self):
         return f'Бронь на электронную почту {self.email} для {self.name} {self.surname}'
+    
+    
+
+@receiver(pre_delete, sender=Reserve)
+def update_related_model(sender, instance, **kwargs):
+    related_model = instance.booking # получить связанный объект модели
+    related_model.quantity += instance.reserve_quantity 
+    related_model.save() # сохранить изменения
+@receiver(post_save, sender=Reserve)
+def set_delete_timer(sender, instance, **kwargs):
+    if not instance.deleted_at and not instance.is_paid: # проверяем, что объект еще не помечен на удаление и поле оплачено имеет значение False
+        instance.deleted_at = timezone.now() + timedelta(hours=48) # ставим наш таймер на 48 часов
+        instance.save()

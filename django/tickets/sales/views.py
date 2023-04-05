@@ -32,7 +32,6 @@ def Order(request,product_id):
             product.quantity-=quan
             product.save()
             form.instance.booking=product
-            
             form.save()
             
             return HttpResponseRedirect(reverse('sales:index'))
