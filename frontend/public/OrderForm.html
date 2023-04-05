@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Продажа Билетов</title>
     <link rel="stylesheet" href="../src/OrderForm.css">
+    <script src="../src/OrderPage.js" defer></script>
 </head>
 <body>
     <div class="order-form-wrapper" id="orderFormWrapper">
@@ -47,8 +48,8 @@
           </div>
           <div class="reserved-places">
             <h3>Сколько мест хотите забронировать?</h3>
-            <input type="number" min="1" max="8" placeholder="Количество мест" name="seats">
-            <p>
+            <input type="number" min="1" max="8" placeholder="Количество мест" id="seatsInput" name="seats">
+            <p id="freePlaces">
               Свободных мест: 4
             </p>
           </div>

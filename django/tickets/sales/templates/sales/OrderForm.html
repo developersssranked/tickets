@@ -11,46 +11,54 @@
 <body>
     <div class="order-form-wrapper" id="orderFormWrapper">
         <a href="{%url 'sales:index'%}" class="hide-form-cross"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg></a>
-        <form class="order-form">
+        <form action="{%url 'sales:order' product%}" method="post" class="order-form" >
+          {%csrf_token%}
           <div class="user-name">
             <h3>Введите ваше имя и фамилию</h3>
-              <input type="text" placeholder="Имя" required name="firstName">
-              <input type="text" placeholder="Фамилия" required name="lastName">
+              {{form.name}}
+              {{form.surname}}
+              
           </div>
           <div class="contact-data">
-            <h3>Ваш номер телефона с whatsapp и почта</h3>
-            <input type="tel" placeholder="Номер Телефона" required name="telNum">
-            <input type="email" placeholder="Почта" required name="Mail">
+            <h3>Ваш номер телефона с whatsapp и почту</h3>
+            {{form.phone_number}}
+            {{form.email}}
+            <!-- <input type="tel" placeholder="Номер Телефона" required name="telNum">
+            <input type="email" placeholder="Почта" required name="Mail"> -->
           </div>
           <div class="luggage">
             <h3>Ваш багаж</h3>
+            
             <div class="luggage-input-group">
+              
               <label class="cl-checkbox">
-                <input type="checkbox" required name="luggage">
+                {{form.bagage}}
+                <!-- <input type="checkbox" required name="luggage"> -->
                 <span>Чемодан</span>
               </label>
               <label class="cl-checkbox">
-                <input type="checkbox" name="handLuggage" required>
+                {{form.handbag}}
+                <!-- <input type="checkbox" required name="handLuggage" > -->
                 <span>Ручная кладь</span>
               </label>
             </div>
           </div>
           <div class="animals">
-            <h3>У вас есть животные?</h3>
-            <label class="radio-btn">
-              <input type="radio" name="pets" required>
-              <span>Да</span>
-            </label>
-            <label class="radio-btn">
-              <input type="radio" name="pets" required>
-              <span>Нет</span>
+            <h3>Животные</h3>
+            
+            <label class="cl-checkbox">
+              {{form.pets}}
+              <!-- <input type="radio" required_name="pets">               переписать это говно нормально, чтобы красиво было емае -->
+              <span>Со мной поедет питомец</span>
+            
             </label>
           </div>
           <div class="reserved-places">
             <h3>Сколько мест хотите забронировать?</h3>
-            <input type="number" min="1" max="8" placeholder="Количество мест" name="seats">
+            {{form.reserve_quantity}} 
+            <!-- <input type="number" min="1" max="8" placeholder="Количество мест" name="seats"> -->
             <p>
-              Свободных мест: 4
+              Свободных мест: {{quantity}}
             </p>
           </div>
           <button type="submit" class="order-submit-btn">Подтвердить</button>
