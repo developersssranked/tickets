@@ -21,57 +21,58 @@ class Command(BaseCommand):
         bot.load_next_step_handlers()								# Загрузка обработчиков
         bot.infinity_polling()											# Бесконечный цикл бота
 
+
+
+
 @bot.message_handler (commands= ["help"])
 def help (help):
-    bot.send_message(help.chat.id , 'приветствую, если вы хотите узнать о свободных местах на рейс, то упомяните меня в чате и напишите куда вы бы хотели поехать + дату "Варна, 13июня" ')
-    bot.send_message(help.chat.id , f'{Products.objects.all()}')
-    bot.send_message(help.chat.id , f'-------------')
+    bot.send_message(
+        help.chat.id ,
+        'Приветствую, вы можете узнать кол-во свободных мест на тот или иной рейс, сформулировав такой запрос:\n@test_4524Bot место отправки, место прибытия, дата(гггг-мм-дд)\nпример записи:\n@test_4524Bot Солнечный берег, Бургас, 2023-09-05'
+        )
 
+# @bot.message_handler(func=lambda m: True)
+# def echo_all(message):
+#     if message == 'пр':
+#         bot.message_handler(message.chat.id, 'все работает брат')
 
-    x = Products.objects.all()
-    for cicle in x:
-        name = cicle.start_punkt
-        bot.send_message(help.chat.id , f'{name}')
+#     # while True:
+#     #     x = 
 
-    bot.send_message(help.chat.id , f'-------------------------------')
-
+    
         
-    bot.send_message(help.chat.id , f'{Products.objects.last()}')
+# 	# bot.reply_to(message, message.text)
 
     
 
+# @bot.message_handler(commands=['info'])
+# def info(info):
+#     while True:
+#         first_bd = Products.objects.all()
+#         sleep(10)
+#         second_bd = Products.objects.all()
+#         if len(first_bd) < len(second_bd):
+#             bot.send_message(info.chat.id, 'прошли изменения')
+#         else:
+#             continue
 
 
-'''
-идеальный запрос :
-бот Белорецк Учалы 2023-06-06
-что может ввести пользователь:
-1.бот белорецк учалы 2023-06-06  = все написанно с маленькой буквы
-2.бот белорецку учады 2023-06-06 = написанно с маленькой ошибкой 
-3.бот БЕЛОрецк УчаЛы 2023-06-06 = некоторые буквы написанны с большой 
-4.бот 2023-06-06 Учалы Белорецк = написанно не в том порядке 
-5.бот Белорецк, учалы, 2023-06-06 = написанно через запятые, дефисы и прочую хуйню 
-6.
-
-логика обработки :
-1.деление:
-1.1 
-'''
 @bot.message_handler (content_types =['text'])
 def start (message):
     if '@test_4524Bot' in message.text:
         try:
             user = message.text
-            list = user.split(',')
-            first_word = list[0].split() #эта строчка отвечает за отделения пункта отправки от команды вызова бота
-            list[0] = first_word[1]
+            lists = user.split(',')
+            first_word = lists[0].split() #эта строчка отвечает за отделения пункта отправки от команды вызова бота
+            lists[0] = first_word[1]
             # print(der_list)
 
             # достаем не обработанные слова
-            fir_word_d = list[0]
-            sec_word_d = list[1]
-            thr_word_d = list[2]
+            fir_word_d = lists[0]
+            sec_word_d = lists[1]
+            thr_word_d = lists[2]
             # print ( fir_word_d, sec_word_d , thr_word_d)
+
 
 
             #обрабатываем слова 
@@ -111,57 +112,61 @@ def start (message):
                 recycle = dat.maketrans('.', '-')
                 recycle_date = dat.translate(recycle)
 
-                sp_date = recycle_date.split('-')
-                if len(sp_date[2]) > 3 :
+                sp_date = recycle_date.split('-')#делим по пробелу
+                if len(sp_date[2]) > 3 :  #переворачиваем если год не там где нужно
                     sp_date = sp_date[::-1]
 
+                if len(sp_date[2]) == 1: #переделываем в 20023-01-06 , если пользователь написал 2023-1-6
+                    sp_date[2] = '0'+sp_date[2]
+                    
+                if len(sp_date[1]) == 1:
+                    sp_date[1] = '0'+sp_date[1]
 
 
-                date = sp_date[0]+ '-' + sp_date[1] + '-' + sp_date[2]
-                date = date.replace(" ", "")
+                date = sp_date[0]+ '-' + sp_date[1] + '-' + sp_date[2] #соеденяем
+                date = date.replace(" ", "") #откудато могут взяться лишние пробелы, удаляем их
                 
                 return date
-
-    
-
-
-
+            
             # чистые слова
             start = recycle_w(fir_word_d)
             finish = recycle_w(sec_word_d)
             time= date(thr_word_d)
-
-            # bot.send_message(message.chat.id , f'{start}')
-            # bot.send_message(message.chat.id , f'{finish}')
-            # bot.send_message(message.chat.id , f'{time}')
+            
 
             
 
+            filter_bd = Products.objects.filter(start_punkt = start, finish_punkt = finish, date = time) # достаем такой элемент из бд
 
-        
-        except Exception :
+            # bot.send_message(message.chat.id , f'{filter_bd}')
+            # bot.send_message(message.chat.id , f'{start}, {finish}, {time}')
+
+            if filter_bd.exists(): #проверяем есть ли такой элемент
+
+                mesta = filter_bd.values_list('quantity') #достаем кол-во мест по ключу quantity
+
+                # mesta1 = list(mesta[0])
+                # mesta3 = mesta2[0]
+                # mesta_finaly = list(mesta[0][0]) #обрабатыввем queryset превращая его в нормальную строку
+
+                mesta_finaly = mesta[0][0]  #мистическое место, работало потом не работало, сейчас работает вот так
+                
+                bot.send_message(message.chat.id , f'по вашему запросу:\nместо отправки: {start}\nместо прибытия: {finish}\nдата: {time}\nсвободных мест на рейс: {mesta_finaly}') 
+
+
+
+            else:  #если нету такого еэлемента
+                bot.send_message(message.chat.id , f'не найденно таких поездок по вашему запросу\nместо отправки-{start}, место прибытия-{finish}, дата-{time}\nПопробуйте ввести данные еще раз. Пример запроса: @test_4524Bot Солнечный берег, Бургас, 2023-09-05')
+
+
+        except Exception:
             print(Exception)
-            # введите коректный запрос
+            bot.send_message(message.chat.id , f'Произошла ошибка при обработке ваших данных, проверьте их коректность.\nПример запроса: @test_4524Bot Солнечный берег, Бургас, 2023-09-05')
+        # except Exception :
+        #     print(Exception)
+        #     # введите коректный запрос
 
-
-
-
-
-
-#1. выводить инструкцию правильного запроса 
-#2.принимать текст пользователя 
-# 3. определять валидный ли он
-# 3.1 откуда - for products.start_punkt
-# 3.2 куда - for prod.finish_punkt
-# 3.3 дата -for products.data\
-# сравнение полученных данных с бд
-# вывод - свободные места prod.quantity
-
-# 4. делить его на состовляющие (куда, дата)
-# 5. проверять через цикл по бузе данных "пункт назначения" по числу
-# 6. брать из бд и выводить количество свободных мест, вместе с сылкой на бронировние
     
 
-# если кто то забронировал билет бот должен отправлять анонимно куда его забронировали ()
 
 

@@ -130,3 +130,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # ключ от телеграма
 TELEGRAM_BOT_API_KEY = '6180450238:AAG1Lyzepy7u8pGDCdyjMch7VimVwtIChvw'
+

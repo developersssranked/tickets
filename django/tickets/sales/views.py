@@ -6,6 +6,9 @@ from sales.forms import ReserveForm
 from django.urls import reverse_lazy,reverse
 from django.http import HttpResponseRedirect
 
+
+
+
 class IndexView(ListView):
     template_name='sales/HomePage.html'
     model=Products
@@ -22,7 +25,7 @@ class IndexView(ListView):
 def Order(request,product_id):
     product=Products.objects.get(id=product_id)
     place=product.quantity
-    
+
     if request.method=='POST':
         form=ReserveForm(data=request.POST)
         
@@ -33,10 +36,23 @@ def Order(request,product_id):
             product.save()
             form.instance.booking=product
             form.save()
+
+            # тут прописываю передачу запроса 
+            
+
+            '''
+            логика:
+            1.запрос приходит, модель сохраняется
+            2. получааем инфу о том что в базе данных новый обьект 
+            3. перенаправляем инфу в тг бота
+            4. достаем послений элемент базы данных и отправляем его в беседу телеграм
+            '''
+
             
             return HttpResponseRedirect(reverse('sales:index'))
     else:
         form=ReserveForm()
+
     
     context={'form':form,'product':product_id,'quantity':place}
     return render(request,'sales/OrderForm.html',context)
