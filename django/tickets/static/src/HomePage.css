@@ -402,6 +402,21 @@ select option {
   display: block;
 }
 
+.no-tickets-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.no-tickets {
+  font-family: "OpenSans";
+  width: fit-content;
+  height: min-content;
+  padding: 20px;
+  border: 2px solid #2f4c78;
+  border-radius: 20px;
+}
+
 @media (max-width: 1400px) {
   .search-sec-container {
     width: 60%;

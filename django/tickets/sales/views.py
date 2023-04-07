@@ -34,26 +34,9 @@ def Order(request,product_id):
             product.save()
             form.instance.booking=product
             form.save()
-<<<<<<< HEAD
             summa=quan*product.price
             context={'product':product,'quantity':quan,'sum':summa}
             return render(request,'sales/Payment.html',context=context)
-=======
-
-            # тут прописываю передачу запроса 
-            
-
-            '''
-            логика:
-            1.запрос приходит, модель сохраняется
-            2. получааем инфу о том что в базе данных новый обьект 
-            3. перенаправляем инфу в тг бота
-            4. достаем послений элемент базы данных и отправляем его в беседу телеграм
-            '''
-
-            
-            return HttpResponseRedirect(reverse('sales:index'))
->>>>>>> c448db532ba57daf160bcfbe4f19c4e4911ddba9
     else:
         form=ReserveForm()
 
@@ -76,3 +59,6 @@ def Sort(request):
         product=Products.objects.filter(date=datetime.datetime.now().date())
         context={'form':form,'products':product}
     return render(request,'sales/HomePage.html',context)
+
+def SeeCancel(request):
+    return render(request,'sales/CancelOrder.html')

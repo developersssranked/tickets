@@ -195,11 +195,20 @@
             </div>
           {%endfor%}
         {%else%}
-        <div class="tickets-container"></div>
-          <h1>Извините на выбранную дату билетов нет</h1>                         
-        </div>
+        <section class="tickets-sec">
+          <div class="no-tickets-wrapper">
+            <h1 class="no-tickets">
+              Извините но на эту дату нет билетов
+            </h1>
+          </div>
+        </section>
         {%endif%}
       </section>
+      <div class="cancel-order-btn-wrapper">
+        <a href="{%url 'sales:cancel'%}" class="cancel-order-btn">
+          Отменить Заказ
+        </a>
+      </div>
       <section class="contacts-sec">
         <div class="contacts-wrapper">
           <h1>Связь с нами</h1>

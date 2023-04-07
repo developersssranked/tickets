@@ -112,7 +112,6 @@ main {
 }
 
 .payment-method a {
-  position: relative;
   width: calc(50% - 5px);
   display: block;
 }
@@ -122,38 +121,14 @@ main {
   justify-content: space-between;
 }
 
-.payment-method input {
-  position: absolute;
-  z-index: 100;
-  transform: translate(5px, 5px);
-}
-
 .payment-method img {
-  width: 40%;
+  width: 100%;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   border-radius: 15px;
 }
 
 .payment-method h3 {
   text-align: center;
-}
-
-.payment-submit {
-  display: block;
-  margin: 0 auto;
-  padding: 10px 15px;
-  border-radius: 20px;
-  outline: none;
-  background-color: #414181;
-  border: 1px solid #414181;
-  color: white;
-  margin-top: 10px;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  transition: 0.3s;
-}
-
-.payment-submit:hover {
-  filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.25));
 }
 
 @media (max-width: 1100px) {
