@@ -7,6 +7,9 @@ from django.urls import reverse_lazy,reverse
 from django.http import HttpResponseRedirect
 import datetime
 
+
+
+
 class IndexView(ListView):
     template_name='sales/HomePage.html'
     model=Products
@@ -20,7 +23,7 @@ class IndexView(ListView):
 def Order(request,product_id):
     product=Products.objects.get(id=product_id)
     place=product.quantity
-    
+
     if request.method=='POST':
         form=ReserveForm(data=request.POST)
         
@@ -31,11 +34,29 @@ def Order(request,product_id):
             product.save()
             form.instance.booking=product
             form.save()
+<<<<<<< HEAD
             summa=quan*product.price
             context={'product':product,'quantity':quan,'sum':summa}
             return render(request,'sales/Payment.html',context=context)
+=======
+
+            # тут прописываю передачу запроса 
+            
+
+            '''
+            логика:
+            1.запрос приходит, модель сохраняется
+            2. получааем инфу о том что в базе данных новый обьект 
+            3. перенаправляем инфу в тг бота
+            4. достаем послений элемент базы данных и отправляем его в беседу телеграм
+            '''
+
+            
+            return HttpResponseRedirect(reverse('sales:index'))
+>>>>>>> c448db532ba57daf160bcfbe4f19c4e4911ddba9
     else:
         form=ReserveForm()
+
     
     context={'form':form,'product':product_id,'quantity':place}
     return render(request,'sales/OrderForm.html',context)
