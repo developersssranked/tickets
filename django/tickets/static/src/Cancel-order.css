@@ -1,0 +1,43 @@
+@font-face {
+  font-family: OpenSans;
+  src: url(./fonts/OpenSans-Medium.ttf);
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: OpenSans;
+  src: url(./fonts/OpenSans-Regular.ttf);
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: OpenSans;
+  src: url(../src/fonts/OpenSans-Bold.ttf);
+  font-weight: 700;
+  width: 100%;
+  font-style: normal;
+}
+
+body {
+  display: flex;
+  margin: 0;
+  align-items: center;
+  min-height: 100dvh;
+  justify-content: center;
+}
+
+.cancel-order {
+  width: 80%;
+  max-width: 650px;
+  background-color: #414181;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  color: white;
+  font-family: "OpenSans";
+}
+
+.cancel-order > h1 {
+  text-align: center;
+}

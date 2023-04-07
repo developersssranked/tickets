@@ -15,10 +15,13 @@
         <div class="search-sec-container" id="search-sec-container">
           <h1>Купить Билет На Автобус</h1>
           <p>Ищи и найди нужный автобус</p>
-          <form class="search-form">
+          <form class="search-form" method="post" action="{%url 'sales:index'%}">
+            {%csrf_token%}
             <div class="place-input-group">
               <label class="from-input-container" for="fromCity">
-                <select name="fromCity" id="fromCity" required>
+                
+                {{form.start_punkt}}
+                <!-- <select name="fromCity" id="fromCity" required>
                   <option value="Из" disabled selected>Откуда</option>
                   <option value="IST">IST</option>
                   <option value="Варна">Варна</option>
@@ -28,7 +31,8 @@
                   <option value="Равда">Равда</option>
                   <option value="Солнечный берег">Солнечный берег</option>
                   <option value="Бургас">Бургас</option>
-                </select>
+                </select> -->
+                
                 <span
                   ><svg
                     width="19"
@@ -48,7 +52,8 @@
                 </span>
               </label>
               <label class="to-input-container" for="toCity">
-                <select name="toCity" id="toCity" required>
+                {{form.finish_punkt}}
+                <!-- <select name="toCity" id="toCity" required>
                   <option value="В" disabled selected>Куда</option>
                   <option value="IST">IST</option>
                   <option value="Варна">Варна</option>
@@ -58,7 +63,8 @@
                   <option value="Равда">Равда</option>
                   <option value="Солнечный берег">Солнечный берег</option>
                   <option value="Бургас">Бургас</option>
-                </select>
+                </select> -->
+                
                 <span
                   ><svg
                     width="19"
@@ -81,7 +87,9 @@
               <p>
                 Дата Отправления:
               </p>
-                <input type="date" id="datePicker" required class="datepicker-input" />
+                {{form.date}}
+                <!-- <input type="date" id="datePicker" required class="datepicker-input" /> -->
+                
                 <span class="datepicker-toggle-button">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -135,56 +143,62 @@
         </div>
       </section>
       <section class="tickets-sec">
-        {%for el in object_list%}
-          <div class="tickets-container">
-            
-            <a class="ticket" href="{%url 'sales:order' el.id %}">
+        {%if products%}
+          {%for el in products%}
+            <div class="tickets-container">
               
-              <!-- ticket number -->
-              <div>
-                <p>
-                  
-                </p>
-              </div>
-              <!-- location from & to -->
-              <div class="location-price">
-                <div class="location">
-                  <div class="from">
-                    <p>
-                      От: 
-                    </p>
-                    <span>
-                      {{el.start_punkt}}
-                    </span>
-                  </div>
-                  <div class="to">
-                    <p>
-                      До:
-                    </p>
-                    <span>
-                      {{el.finish_punkt}}
-                    </span>
-                  </div>
-                </div>
-                <div class="price">
+              <a class="ticket" href="{%url 'sales:order' el.id %}">
+                
+                <!-- ticket number -->
+                <div>
                   <p>
-                    {{el.price}} руб
+                    
                   </p>
                 </div>
+                <!-- location from & to -->
+                <div class="location-price">
+                  <div class="location">
+                    <div class="from">
+                      <p>
+                        От: 
+                      </p>
+                      <span>
+                        {{el.start_punkt}}
+                      </span>
+                    </div>
+                    <div class="to">
+                      <p>
+                        До:
+                      </p>
+                      <span>
+                        {{el.finish_punkt}}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="price">
+                    <p>
+                      {{el.price}} руб
+                    </p>
+                  </div>
 
-              </div>
-              <!-- departure time -->
-              <div class="departure">
-                <h5>
-                  Время Отправления
-                </h5> 
-                <p class="departure-time">{{el.time}}, {{el.weekday}}</p>      <!-- Если получится, то добавить здесь день недели-->  
-                <p class="departure-date">{{el.date}}</p>
-              </div>
-            </a>
-          
-          </div>
-        {%endfor%}
+                </div>
+                <!-- departure time -->
+                <div class="departure">
+                  <h5>
+                    Время Отправления
+                  </h5> 
+                  <p class="departure-time">{{el.time}}, {{el.weekday}}</p>      <!-- Если получится, то добавить здесь день недели-->  
+                  <p class="departure-date">{{el.date}}</p>
+                </div>
+              </a>
+            
+            </div>
+          {%endfor%}
+        {%else%}
+        <div class="tickets-container"></div>
+          <h1>Извините на выбранную дату билетов нет</h1>                         
+        </div>
+        {%endif%}
       </section>
       <section class="contacts-sec">
         <div class="contacts-wrapper">
