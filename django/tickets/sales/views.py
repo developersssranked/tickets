@@ -7,7 +7,7 @@ from django.urls import reverse_lazy,reverse
 from django.http import HttpResponseRedirect
 import datetime
 from pycbrf.toolbox import ExchangeRates
-
+from django.utils import timezone
 
 
 
@@ -37,9 +37,9 @@ def Order(request,product_id):
             form.save()
             rates = ExchangeRates(str(datetime.datetime.now().date()))
             result = rates['EUR']
-            print(round(result.value))
+            
             summa=quan*product.price
-            summa_eur=round(summa/(round(result.value)))
+            summa_eur=round(summa/(round(result.value,2)))
             context={'product':product,'quantity':quan,'sum':summa,'eur_sum':summa_eur}
             return render(request,'sales/Payment.html',context=context)
     else:
@@ -67,3 +67,11 @@ def Sort(request):
 
 def SeeCancel(request):
     return render(request,'sales/CancelOrder.html')
+
+
+def AutoDelete(request):
+    reserve=Reserve.objects.all()
+    for object in reserve:
+        if (object.is_paid==False) and (((timezone.now() - object.date_create).total_seconds() > 30)):
+            object.delete()
+    return render(request,'sales/HomePage.html')
