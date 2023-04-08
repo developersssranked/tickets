@@ -6,6 +6,7 @@ from sales.forms import ReserveForm,Sotrform
 from django.urls import reverse_lazy,reverse
 from django.http import HttpResponseRedirect
 import datetime
+from pycbrf.toolbox import ExchangeRates
 
 
 
@@ -34,8 +35,12 @@ def Order(request,product_id):
             product.save()
             form.instance.booking=product
             form.save()
+            rates = ExchangeRates(str(datetime.datetime.now().date()))
+            result = rates['EUR']
+            print(round(result.value))
             summa=quan*product.price
-            context={'product':product,'quantity':quan,'sum':summa}
+            summa_eur=round(summa/(round(result.value)))
+            context={'product':product,'quantity':quan,'sum':summa,'eur_sum':summa_eur}
             return render(request,'sales/Payment.html',context=context)
     else:
         form=ReserveForm()
