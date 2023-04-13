@@ -1,0 +1,68 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Продажа Билетов</title>
+  <link rel="stylesheet" href="{%static 'src/Payment.css'%}" />
+</head>
+
+<body>
+  <main>
+    <div class="ordered">
+      <h1>Выбраный билет</h1>
+      <div class="ticket">
+        <div class="location-price">
+          <div class="location">
+            <p>{{product.start_punkt}}</з>
+            <p>
+              <svg xmlns="http://www.w3.org/2000/svg" height="20px" width="20px" viewBox="0 0 320 512">
+                <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                <path
+                  d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" />
+              </svg>
+            </p>
+            <p>{{product.finish_punkt}}</p>
+          </div>
+        </div>
+        <!-- departure time -->
+        <div class="departure">
+          <h5>Время Отправления</h5>
+          <p class="departure-time">{{product.time}}, {{product.weekday}}</p>
+          <p class="departure-date">{{product.date}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="checkout-form">
+      <h1>Общая стоимость</h1>
+      <div class="total">
+        <p>
+          Количество билетов: {{quantity}}
+        </p>
+        <p>
+          Цена за билет: {{product.price}} р
+        </p>
+        <h3>Всего к оплате: {{sum}} р/ {{eur_sum}} Eur</h3>
+        <div class="payment-method">
+          <h3>Выберите метод оплаты</h3>
+          <div>
+            <a>
+
+              <img src="{%static 'src/images/revolut.jpg'%}" alt="revolut">
+            </a>
+            <a>
+
+              <img src="{%static 'src/images/qiwi.jpg'%}" alt="qivi">
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>

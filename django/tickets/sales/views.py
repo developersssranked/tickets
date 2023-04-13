@@ -2,10 +2,12 @@ from django.shortcuts import render
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from sales.models import Products,Reserve
-from sales.forms import ReserveForm
+from sales.forms import ReserveForm,Sotrform
 from django.urls import reverse_lazy,reverse
 from django.http import HttpResponseRedirect
-
+import datetime
+from pycbrf.toolbox import ExchangeRates
+from django.utils import timezone
 
 
 
@@ -14,11 +16,8 @@ class IndexView(ListView):
     model=Products
    
 
-# class OrderView(CreateView):
-#     model=Reserve
-#     form_class=ReserveForm
-#     template_name='sales/OrderForm.html'
-#     success_url=reverse_lazy('sales:index')                 #Перекинуть на страницу оплаты
+
+
 
 
    
@@ -36,23 +35,43 @@ def Order(request,product_id):
             product.save()
             form.instance.booking=product
             form.save()
-
-            # тут прописываю передачу запроса 
+            rates = ExchangeRates(str(datetime.datetime.now().date()))
+            result = rates['EUR']
             
-
-            '''
-            логика:
-            1.запрос приходит, модель сохраняется
-            2. получааем инфу о том что в базе данных новый обьект 
-            3. перенаправляем инфу в тг бота
-            4. достаем послений элемент базы данных и отправляем его в беседу телеграм
-            '''
-
-            
-            return HttpResponseRedirect(reverse('sales:index'))
+            summa=quan*product.price
+            summa_eur=round(summa/(round(result.value,2)))
+            context={'product':product,'quantity':quan,'sum':summa,'eur_sum':summa_eur}
+            return render(request,'sales/Payment.html',context=context)
     else:
         form=ReserveForm()
 
     
     context={'form':form,'product':product_id,'quantity':place}
     return render(request,'sales/OrderForm.html',context)
+def Sort(request):
+
+    if request.method=='POST':
+        form=Sotrform(data=request.POST)
+        if form.is_valid():
+            product_start=form.cleaned_data.get('start_punkt')
+            product_finish=form.cleaned_data.get('finish_punkt')
+            product_date=form.cleaned_data.get('date')
+            product=Products.objects.filter(start_punkt=product_start,finish_punkt=product_finish,date=product_date)
+            context={'form':form,'products':product}
+            
+    else:
+        form =Sotrform()
+        product=Products.objects.filter(date=datetime.datetime.now().date())
+        context={'form':form,'products':product}
+    return render(request,'sales/HomePage.html',context)
+
+def SeeCancel(request):
+    return render(request,'sales/CancelOrder.html')
+
+
+def AutoDelete(request):
+    reserve=Reserve.objects.all()
+    for object in reserve:
+        if (object.is_paid==False) and (((timezone.now() - object.date_create).total_seconds() > 30)):
+            object.delete()
+    return render(request,'sales/HomePage.html')

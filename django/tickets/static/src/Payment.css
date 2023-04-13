@@ -1,0 +1,144 @@
+body {
+}
+
+* {
+  outline: none;
+  -webkit-tap-highlight-color: transparent; /* Для Safari и Chrome */
+  -moz-tap-highlight-color: transparent; /* Для Firefox */
+  -ms-tap-highlight-color: transparent; /* Для IE */
+  tap-highlight-color: transparent; /* Для других браузеров */
+  font-family: "OpenSans";
+}
+
+@font-face {
+  font-family: OpenSans;
+  src: url(./fonts/OpenSans-Medium.ttf);
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: OpenSans;
+  src: url(./fonts/OpenSans-Regular.ttf);
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: OpenSans;
+  src: url(../src/fonts/OpenSans-Bold.ttf);
+  font-weight: 700;
+  width: 100%;
+  font-style: normal;
+}
+
+main {
+  display: flex;
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  min-height: 98vh;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.price {
+  color: #148a59;
+  font-family: "OpenSans";
+  font-weight: 400;
+  font-size: 18.5978px;
+  line-height: 25px;
+}
+
+.location svg {
+  position: relative;
+  top: 5px;
+  transform: rotate(90deg);
+}
+.location p {
+  font-weight: 400;
+  margin: 5px;
+  font-size: 15.5978px;
+  line-height: 25px;
+  text-align: center;
+}
+
+.location {
+  padding: 10px;
+}
+
+.ordered h1 {
+  text-align: center;
+}
+
+.ticket {
+  background-color: whitesmoke;
+  border-radius: 20px;
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.5);
+}
+
+.total {
+  background-color: whitesmoke;
+  border-radius: 20px;
+  padding: 10px;
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+.departure {
+  border-radius: 0 0 17.0726px 17.0726px;
+  background-color: #414181;
+  color: white;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.checkout-form > h1 {
+    text-align: center;
+}
+
+.departure p {
+  margin: 5px;
+}
+
+.departure h5 {
+  margin: 10px;
+}
+
+.total > p {
+  font-size: 14.5978px;
+
+  margin: 5px 0;
+}
+
+.payment-method a {
+  width: calc(50% - 5px);
+  display: block;
+}
+
+.payment-method > div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.payment-method img {
+  width: 100%;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 15px;
+}
+
+.payment-method h3 {
+  text-align: center;
+}
+
+@media (max-width: 1100px) {
+  main {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 470px) {
+  .payment-method input {
+    transform: translate(0px, 0px);
+  }
+}

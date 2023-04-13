@@ -30,6 +30,8 @@
 body {
     display: flex;
     margin: 0;
+    align-items: center;
+    min-height: 100dvh;
     justify-content: center;
 }
 
@@ -397,5 +399,11 @@ body {
   }
   .contacts-order-wrapper {
     border-radius: 0;
+  }
+}
+
+@media (max-width: 390px) {
+  .user-name h3 {
+    width: 93%;
   }
 }

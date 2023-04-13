@@ -9,8 +9,18 @@ from django.utils import timezone
     
 
 class Products(models.Model):
-    start_punkt=models.CharField(verbose_name='Точка отправления',max_length=50)
-    finish_punkt=models.CharField(verbose_name='Точка прибытия',max_length=50)
+    punkt_choices=[
+        ('Ist','Ist' ),
+        ('Варна','Варна'),
+        ('Бяла','Бяла'),
+        ("Обзор","Обзор"),
+        ("Святой влас","Святой влас"),
+        ("Равда","Равда"),
+        ("Солнечный берег","Солнечный берег"),
+        ("Бургас","Бургас"),
+        ]
+    start_punkt=models.CharField(verbose_name='Точка отправления',max_length=50,choices=punkt_choices)
+    finish_punkt=models.CharField(verbose_name='Точка прибытия',max_length=50,choices=punkt_choices)
     price=models.PositiveIntegerField(verbose_name='Цена')
     quantity=models.IntegerField(verbose_name='Количество свободных мест',default=8)
     
@@ -53,13 +63,19 @@ class Reserve(models.Model):
     bagage=models.BooleanField(verbose_name='Багаж',default=False)
     handbag=models.BooleanField(verbose_name='Ручная кладь',default=False)
     reserve_quantity=models.PositiveIntegerField(verbose_name='Количество забронированных мест')
-    deleted_at=models.DateTimeField(verbose_name='Удалить',null=True,blank=True)
+    
     
     class Meta:                              #класс мета это создание доп настроек, с помощью этой мы сделали отображение в админке не POSTSS, а продукты, а также продукт в единственном числе
         verbose_name='Бронь'
         verbose_name_plural='Брони'
     def __str__(self):
         return f'Бронь на электронную почту {self.email} для {self.name} {self.surname}'
+    def auto_delete_order(self):
+        
+        if (self.is_paid==False) and ((timezone.now() - self.date_create).total_seconds() > 30):             #поменять на другое время автоудаление брони
+                
+                self.delete()
+        
     
     
 
@@ -68,8 +84,7 @@ def update_related_model(sender, instance, **kwargs):
     related_model = instance.booking # получить связанный объект модели
     related_model.quantity += instance.reserve_quantity 
     related_model.save() # сохранить изменения
+
 @receiver(post_save, sender=Reserve)
-def set_delete_timer(sender, instance, **kwargs):
-    if not instance.deleted_at and not instance.is_paid: # проверяем, что объект еще не помечен на удаление и поле оплачено имеет значение False
-        instance.deleted_at = timezone.now() + timedelta(hours=48) # ставим наш таймер на 48 часов
-        instance.save()
+def order_post_save(sender, instance, **kwargs):
+    instance.auto_delete_order()
