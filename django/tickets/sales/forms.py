@@ -1,5 +1,6 @@
-from django.forms import ModelForm,TextInput, DateTimeInput, Textarea,CheckboxInput, RadioSelect,NumberInput
-from sales.models import Reserve
+from django.forms import ModelForm,TextInput, DateTimeInput, Textarea,CheckboxInput, RadioSelect,NumberInput,Select,DateInput
+from sales.models import Reserve,Products
+from django import forms
 
 class ReserveForm(ModelForm):
     
@@ -31,7 +32,37 @@ class ReserveForm(ModelForm):
             'type':"checkbox",'name':'luggage'
             }),
             'reserve_quantity':NumberInput(attrs={
-            'type':"number", 'min':"1", 'max':"8", 'placeholder':"Количество мест", 'name':"seats"
+            'type':"number", 'min':"1", 'max':"8", 'placeholder':"Количество мест", 'id':"seatsInput", 'name':"seats"
             })
         }
+punkt_choices=[
+        ('Ist','Ist' ),
+        ('Варна','Варна'),
+        ('Бяла','Бяла'),
+        ("Обзор","Обзор"),
+        ("Святой влас","Святой влас"),
+        ("Равда","Равда"),
+        ("Солнечный берег","Солнечный берег"),
+        ("Бургас","Бургас"),
+        ]
+class Sotrform(ModelForm):
     
+    class Meta:
+        model=Products
+        fields=['start_punkt','finish_punkt','date']
+        start_punkt=forms.ChoiceField(choices=punkt_choices,widget=forms.Select(attrs={'name':"fromCity", 'id':"fromCity"}))
+        finish_punkt=forms.ChoiceField(choices=punkt_choices,widget=forms.Select(attrs={
+                'name':"toCity", 'id':"toCity"
+            }))
+        widgets = {
+            # 'start_punkt': TextInput(attrs={
+            #     'name':"fromCity", 'id':"fromCity"
+            # }),
+            # 'finish_punkt': TextInput(attrs={
+            #     'name':"toCity", 'id':"toCity"
+            # }),
+            'date': DateInput(attrs={
+                'type':"date",'id':"datePicker", 'class':"datepicker-input"
+            }),
+            
+        }

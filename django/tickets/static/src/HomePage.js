@@ -140,3 +140,14 @@ function hideOverflowElements() {
 }
 hideOverflowElements();
 window.addEventListener("resize", hideOverflowElements);
+
+function setTicketsNumbers() {
+  const allTicketsNumbers = document.querySelectorAll(".ticket-number")
+  allTicketsNumbers.forEach((p, idx) => {
+    p.innerText = idx + 1
+  })
+}
+
+document.getElementById("searchSubmit").addEventListener("click", setTicketsNumbers)
+
+setTicketsNumbers()

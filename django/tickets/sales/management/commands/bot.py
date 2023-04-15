@@ -30,11 +30,37 @@ def help (help):
         help.chat.id ,
         'Приветствую, вы можете узнать кол-во свободных мест на тот или иной рейс, сформулировав такой запрос:\n@test_4524Bot место отправки, место прибытия, дата(гггг-мм-дд)\nпример записи:\n@test_4524Bot Солнечный берег, Бургас, 2023-09-05'
         )
+    
+    print(1)
+# @bot.message_handler(func=lambda m: True)
+# def echo_all(message):
+#     if message == 'пр':
+#         bot.message_handler(message.chat.id, 'все работает брат')
 
+#     # while True:
+#     #     x = 
+
+    
+        
+# 	# bot.reply_to(message, message.text)
+
+    
+
+# @bot.message_handler(commands=['info'])
+# def info(info):
+#     while True:
+#         first_bd = Products.objects.all()
+#         sleep(10)
+#         second_bd = Products.objects.all()
+#         if len(first_bd) < len(second_bd):
+#             bot.send_message(info.chat.id, 'прошли изменения')
+#         else:
+#             continue
 
 
 @bot.message_handler (content_types =['text'])
 def start (message):
+    print(1)
     if '@test_4524Bot' in message.text:
         try:
             user = message.text
