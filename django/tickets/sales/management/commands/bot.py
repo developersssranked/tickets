@@ -80,7 +80,7 @@ def start (message):
             #обрабатываем слова 
             def recycle_w (word):
                 if 'I' in word or 'i' in word or 'S' in word or 's' in word :
-                    clear_w = 'IST'
+                    clear_w = 'Ist'
                     return clear_w 
 
                 if 'Ва' in word or 'ва' in word or 'арн' in word or 'ве' in word:
@@ -134,16 +134,19 @@ def start (message):
             start = recycle_w(fir_word_d)
             finish = recycle_w(sec_word_d)
             time= date(thr_word_d)
+            print (start , finish , time)
             
 
             
 
             filter_bd = Products.objects.filter(start_punkt = start, finish_punkt = finish, date = time) # достаем такой элемент из бд
 
+            print (filter_bd)
             # bot.send_message(message.chat.id , f'{filter_bd}')
             # bot.send_message(message.chat.id , f'{start}, {finish}, {time}')
 
             if filter_bd.exists(): #проверяем есть ли такой элемент
+                print ('прошел e')
 
                 mesta = filter_bd.values_list('quantity') #достаем кол-во мест по ключу quantity
 
