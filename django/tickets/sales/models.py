@@ -5,7 +5,8 @@ from django.dispatch import receiver
 from datetime import timedelta
 from django.utils import timezone
 # Create your models here.
-
+from telebot import TeleBot
+from django.conf import settings
     
 
 class Products(models.Model):
@@ -63,6 +64,7 @@ class Reserve(models.Model):
     bagage=models.BooleanField(verbose_name='Багаж',default=False)
     handbag=models.BooleanField(verbose_name='Ручная кладь',default=False)
     reserve_quantity=models.PositiveIntegerField(verbose_name='Количество забронированных мест')
+    telegram=models.BooleanField(verbose_name='Телеграм',default=True)
     
     
     class Meta:                              #класс мета это создание доп настроек, с помощью этой мы сделали отображение в админке не POSTSS, а продукты, а также продукт в единственном числе
@@ -75,6 +77,14 @@ class Reserve(models.Model):
         if (self.is_paid==False) and ((timezone.now() - self.date_create).total_seconds() > 30):             #поменять на другое время автоудаление брони
                 
                 self.delete()
+    def save(self, *args, **kwargs):
+        bot_token = settings.TELEGRAM_BOT_API_KEY
+        chat_id = '-912075038'
+        bot = TeleBot(bot_token)
+        message = f"Создана бронь на рейс {self.booking.start_punkt}-{self.booking.finish_punkt}. Оформлено билетов: {self.reserve_quantity}"
+        bot.send_message(chat_id, message)
+        super(Reserve, self).save(*args, **kwargs)
+    
         
     
     
@@ -85,6 +95,6 @@ def update_related_model(sender, instance, **kwargs):
     related_model.quantity += instance.reserve_quantity 
     related_model.save() # сохранить изменения
 
-@receiver(post_save, sender=Reserve)
-def order_post_save(sender, instance, **kwargs):
-    instance.auto_delete_order()
+# @receiver(post_save, sender=Reserve)
+# def order_post_save(sender, instance, **kwargs):
+#     instance.send_message()

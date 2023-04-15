@@ -30,7 +30,7 @@ def help (help):
         help.chat.id ,
         'Приветствую, вы можете узнать кол-во свободных мест на тот или иной рейс, сформулировав такой запрос:\n@test_4524Bot место отправки, место прибытия, дата(гггг-мм-дд)\nпример записи:\n@test_4524Bot Солнечный берег, Бургас, 2023-09-05'
         )
-
+    print(1)
 # @bot.message_handler(func=lambda m: True)
 # def echo_all(message):
 #     if message == 'пр':
@@ -59,6 +59,7 @@ def help (help):
 
 @bot.message_handler (content_types =['text'])
 def start (message):
+    print(1)
     if '@test_4524Bot' in message.text:
         try:
             user = message.text
